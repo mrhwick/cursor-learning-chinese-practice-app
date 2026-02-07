@@ -6,6 +6,8 @@ import { PhraseCard } from "./PhraseCard";
 type Health = { ok: boolean };
 
 export function App() {
+  const lastClassroomIdKey = "ltc:lastClassroomId";
+
   const [health, setHealth] = useState<Health | null>(null);
   const [me, setMe] = useState<UserPublic | null>(null);
   const [myClassrooms, setMyClassrooms] = useState<ClassroomPublic[]>([]);
@@ -24,6 +26,42 @@ export function App() {
   const [newPinyin, setNewPinyin] = useState("nǐ hǎo");
   const [newEnglish, setNewEnglish] = useState("Hello");
 
+  function rememberClassroomId(id: number) {
+    try {
+      localStorage.setItem(lastClassroomIdKey, String(id));
+    } catch {
+      // ignore
+    }
+  }
+
+  function readRememberedClassroomId(): number | null {
+    try {
+      const v = localStorage.getItem(lastClassroomIdKey);
+      if (!v) return null;
+      const n = Number(v);
+      return Number.isFinite(n) ? n : null;
+    } catch {
+      return null;
+    }
+  }
+
+  async function loadSessionAndClassrooms() {
+    const meData = await apiFetch<UserPublic>("/api/me");
+    setMe(meData);
+
+    const cls = await apiFetch<ClassroomPublic[]>("/api/classrooms");
+    setMyClassrooms(cls);
+
+    // Restore last selected classroom if possible.
+    const rememberedId = readRememberedClassroomId();
+    const toSelect =
+      (rememberedId ? cls.find((c) => c.id === rememberedId) : undefined) ?? (cls.length === 1 ? cls[0] : undefined);
+    if (toSelect) {
+      setClassroom(toSelect);
+      await refreshPhrases(toSelect.id);
+    }
+  }
+
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -31,14 +69,7 @@ export function App() {
         const data = await apiFetch<Health>("/api/health");
         if (!cancelled) setHealth(data);
         try {
-          const meData = await apiFetch<UserPublic>("/api/me");
-          if (!cancelled) setMe(meData);
-          try {
-            const cls = await apiFetch<ClassroomPublic[]>("/api/classrooms");
-            if (!cancelled) setMyClassrooms(cls);
-          } catch {
-            if (!cancelled) setMyClassrooms([]);
-          }
+          await loadSessionAndClassrooms();
         } catch {
           if (!cancelled) setMe(null);
           if (!cancelled) setMyClassrooms([]);
@@ -65,20 +96,20 @@ export function App() {
 
   async function onSignup() {
     setError(null);
-    const user = await apiFetch<UserPublic>("/api/auth/signup", {
+    await apiFetch<UserPublic>("/api/auth/signup", {
       method: "POST",
       body: JSON.stringify({ email, password, role }),
     });
-    setMe(user);
+    await loadSessionAndClassrooms();
   }
 
   async function onLogin() {
     setError(null);
-    const user = await apiFetch<UserPublic>("/api/auth/login", {
+    await apiFetch<UserPublic>("/api/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
-    setMe(user);
+    await loadSessionAndClassrooms();
   }
 
   async function onLogout() {
@@ -97,6 +128,7 @@ export function App() {
       body: JSON.stringify({ name: classroomName }),
     });
     setClassroom(c);
+    rememberClassroomId(c.id);
     const cls = await apiFetch<ClassroomPublic[]>("/api/classrooms");
     setMyClassrooms(cls);
     await refreshPhrases(c.id);
@@ -108,9 +140,11 @@ export function App() {
       method: "POST",
       body: JSON.stringify({ invite_code: inviteCode }),
     });
-    setClassroom({ id: res.classroom_id, name: "Joined classroom", invite_code: inviteCode, owner_id: -1, created_at: new Date().toISOString() });
+    rememberClassroomId(res.classroom_id);
     const cls = await apiFetch<ClassroomPublic[]>("/api/classrooms");
     setMyClassrooms(cls);
+    const joined = cls.find((c) => c.id === res.classroom_id);
+    if (joined) setClassroom(joined);
     await refreshPhrases(res.classroom_id);
   }
 
@@ -203,6 +237,7 @@ export function App() {
                         key={c.id}
                         onClick={async () => {
                           setClassroom(c);
+                          rememberClassroomId(c.id);
                           await refreshPhrases(c.id);
                         }}
                         style={{ textAlign: "left" }}

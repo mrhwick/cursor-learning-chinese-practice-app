@@ -1,0 +1,17 @@
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# API dev artifacts
+apps/api/dev.db
+apps/api/uploads/
+apps/api/.test_uploads/
+
+# Node
+node_modules/
+dist/
+

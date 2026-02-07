@@ -6,6 +6,12 @@ Be able to:
 - make a tiny change and see it in the browser
 - ask Cursor for a plan + an explanation
 
+### Concepts you’re practicing
+- What a “repo” is (a folder of code + docs)
+- What a “terminal” is (where you run commands)
+- What a “dev server” is (a program running on your computer that your browser can visit)
+- How to use Cursor as a tutor (plan → small steps → explain-back)
+
 ### Allowed files
 - `docs/CURSOR_PLAYBOOK.md`
 - `apps/web/src/ui/App.tsx`
@@ -29,13 +35,33 @@ Rules:
 
 ## Tasks
 
-1) Run the repo:
-- follow `docs/GETTING_STARTED.md`
-- run `./scripts/dev.sh`
+### Task 1: Run the repo
+1) Read `docs/ABSOLUTE_BEGINNER.md` (only if you’re new to terminals).
+2) Follow `docs/GETTING_STARTED.md`.
+3) Run:
+   - `./scripts/dev.sh`
 
-2) In `apps/web/src/ui/App.tsx`, change the subtitle text to include your name.
+What “success” looks like:
+- Your terminal shows the API and web dev servers running.
+- Your browser opens `http://localhost:5173` and you see the page.
 
-3) Ask Cursor:
-- “Explain what Vite is doing for me here.”
-- “How is the UI talking to the API?”
+### Task 2: Make a tiny UI change
+1) Open `apps/web/src/ui/App.tsx`.
+2) Find the sentence that says this is a learning repo.
+3) Add your name to that sentence.
+4) Save the file and refresh your browser tab.
+
+Explain-back:
+- What file did you change?
+- What did the browser do when you refreshed?
+
+### Task 3: Ask Cursor to teach you (not just code)
+Paste these into Cursor chat:
+- “Explain what Vite is in one paragraph.”
+- “Explain what `/api/health` is and where it lives.”
+- “If I change text in `App.tsx`, why does it show up when I refresh?”
+
+### If you get stuck
+- Open `docs/TROUBLESHOOTING.md`.
+- If you’re stuck >20 minutes, ask your human guide (see `docs/MENTOR_GUIDE.md`).
 

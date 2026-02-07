@@ -10,7 +10,7 @@ Browser → React → `fetch("/api/health")` → FastAPI → JSON → UI.
 - `apps/api/chinese_practice/main.py`
 
 ### Definition of Done
-- The UI shows “API OK”
+- The UI shows something like “API OK” (or a clear success message)
 - You can explain what the Vite proxy is doing
 
 ---

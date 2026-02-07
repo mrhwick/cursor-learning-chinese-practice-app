@@ -35,6 +35,13 @@ Chinese Practice Studio:
 
 You will build this step-by-step using the lesson files in `lessons/`.
 
+## Two implementations (important)
+
+- **Learner starter app**: `apps/`\n
+  This starts simple and you build it up lesson by lesson.\n
+- **Reference app (static “gold”)**: `reference/`\n
+  A complete implementation you can compare against (after you try).
+
 ## How to use the lessons (the workflow)
 
 1. Start with `lessons/00-orientation.md`.

@@ -92,7 +92,16 @@ def create_app() -> FastAPI:
         existing = db.execute(select(User).where(User.email == payload.email)).scalar_one_or_none()
         if existing:
             raise HTTPException(status_code=400, detail="Email already in use")
-        user = User(email=payload.email, password_hash=hash_password(payload.password), role=payload.role)
+        try:
+            password_hash = hash_password(payload.password)
+        except Exception:
+            # If the crypto backend isn't installed correctly, fail with a friendly message
+            # instead of a 500 stack trace.
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Password hashing failed. Try reinstalling API dependencies (see docs/TROUBLESHOOTING.md).",
+            )
+        user = User(email=payload.email, password_hash=password_hash, role=payload.role)
         db.add(user)
         db.commit()
         db.refresh(user)

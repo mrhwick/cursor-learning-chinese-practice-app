@@ -4,7 +4,7 @@
 Students can record audio in the browser (MediaRecorder) and submit it.
 
 ### Allowed files
-- `apps/web/src/ui/PhraseCard.tsx`
+- `apps/web/src/ui/PhraseCard.tsx` (extend your phrase card)
 - `apps/api/chinese_practice/main.py`
 - `apps/api/chinese_practice/storage.py`
 

@@ -6,20 +6,25 @@ Understand and enforce rules like:
 - only classroom owner edits/deletes phrases
 
 ### Allowed files
-- `apps/api/chinese_practice/auth.py`
 - `apps/api/chinese_practice/main.py`
 - `apps/web/src/ui/App.tsx`
 
 ### Definition of Done
-- As a student, you can’t see teacher-only controls.\n
-- As a student, API calls that require teacher role return 403.
+- As a student, teacher-only API calls return 403.
+- The UI hides teacher-only controls when logged in as a student.
 
 ---
 
 ## Tasks
 
-1) Create both a teacher and a student account.\n
-2) Join the same classroom.\n
-3) Try to create a phrase as the student and confirm it fails.\n
-4) Ask Cursor to explain where the authorization checks live.
+1) Add a `role` column to users (`teacher` or `student`).
+
+2) Enforce teacher-only behavior:
+- only teachers can create phrases
+
+3) Update the UI to hide the “create phrase” form unless the logged-in user is a teacher.
+
+Explain-back:
+- Where is the “real” security enforcement? (UI or API?)
+- Why do we still hide controls in the UI even though the API enforces it?
 

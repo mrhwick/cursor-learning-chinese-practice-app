@@ -13,13 +13,7 @@ fi
 
 source .venv/bin/activate
 
-export API_DATABASE_URL="${API_DATABASE_URL:-sqlite:///./dev.db}"
 export API_SESSION_SECRET="${API_SESSION_SECRET:-dev-secret-change-me}"
-export API_UPLOAD_DIR="${API_UPLOAD_DIR:-./uploads}"
-
-mkdir -p "$API_UPLOAD_DIR"
-
-alembic upgrade head
 
 exec uvicorn chinese_practice.main:app --host 0.0.0.0 --port 8000 --reload
 

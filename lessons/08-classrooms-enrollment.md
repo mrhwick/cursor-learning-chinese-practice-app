@@ -17,6 +17,6 @@ Build the multi-user “class” concept:
 ---
 
 ## Explain-back questions
-- What table represents membership?\n
-- Why do we check enrollment before serving phrases/audio?
+- What table represents membership?
+- Why do we check enrollment before serving data?
 

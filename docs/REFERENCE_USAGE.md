@@ -4,6 +4,8 @@
 
 `reference/` is here so you can debug and learn from differences. It is **not** the primary path.
 
+The reference implementation should be treated as **static** so the learner always has a stable “gold” to compare against.
+
 ## Rules of thumb
 
 - **Try first**: attempt the lesson tasks before looking at `reference/`.

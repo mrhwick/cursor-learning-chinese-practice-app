@@ -13,13 +13,5 @@ fi
 
 source .venv/bin/activate
 
-export API_DATABASE_URL="sqlite:///./test.db"
-export API_SESSION_SECRET="test-secret"
-export API_UPLOAD_DIR="./.test_uploads"
-
-rm -f "./test.db"
-rm -rf "$API_UPLOAD_DIR"
-mkdir -p "$API_UPLOAD_DIR"
-
 pytest -q
 

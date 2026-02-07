@@ -8,22 +8,30 @@ Practice component decomposition and state:
 
 ### Allowed files
 - `apps/web/src/ui/App.tsx`
-- `apps/web/src/ui/PhraseCard.tsx`
+- `apps/web/src/ui/PhraseCard.tsx` (you will create this)
 
 ### Definition of Done
 - You can explain:
   - what a component is
   - what props are
   - what state is
-- You made one small UI improvement (your choice) and can justify it
+- The UI shows a small list of 3–5 “phrases” using a `PhraseCard` component (mock data is fine).
 
 ---
 
 ## Suggested tasks
 
-1) Ask Cursor to explain `PhraseCard` in plain English.\n
-2) Add a “collapse/expand submissions” toggle inside `PhraseCard`.\n
-3) Explain-back questions:\n
-- What state lives in `App` vs `PhraseCard`, and why?\n
-- What would break if you removed `credentials: "include"`?
+1) Create `apps/web/src/ui/PhraseCard.tsx`.
+- It should accept props like: `chinese`, `pinyin`, `english`.
+- It should render them nicely.
+
+2) In `apps/web/src/ui/App.tsx`, create a small array of mock phrases and render a list of `PhraseCard`s.
+
+3) Add one small piece of state to practice React state:
+- example: a “Show pinyin” toggle.
+
+4) Explain-back questions:
+- What data is passed as props?
+- What data is stored in state?
+- What happens when state changes?
 

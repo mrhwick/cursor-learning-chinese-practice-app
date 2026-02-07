@@ -4,27 +4,30 @@
 Understand:
 - what an API route is
 - how request/response JSON works
-- how auth affects endpoints
+- how the UI calls the API
 
 ### Allowed files
 - `apps/api/chinese_practice/main.py`
 - `apps/api/chinese_practice/schemas.py`
-- `apps/web/src/api/types.ts`
+- `apps/web/src/ui/App.tsx`
 
 ### Definition of Done
-- You can explain what `response_model=...` does
-- You can point to at least 2 endpoints and describe their inputs/outputs
+- You add a new endpoint and use it from the UI.
+- You can explain what `response_model=...` does.
 
 ---
 
 ## Tasks
 
-1) In the API, find these routes and explain what they do:
-- `GET /api/me`
-- `GET /api/classrooms`
-- `GET /api/classrooms/{classroom_id}/phrases`
+1) Add a new endpoint:
+- `GET /api/version` → returns `{ "version": "0.1.0" }`
 
-2) Ask Cursor to add a new simple endpoint:\n
-- `GET /api/version` → returns `{ "version": "0.1.0" }`\n
-Then display it somewhere in the UI.
+2) Create a response schema in `schemas.py` (example: `VersionResponse`).
+
+3) In the UI (`App.tsx`), call `/api/version` and display the version.
+
+4) Explain-back:
+- What file contains the API route?
+- What file contains the UI code that calls it?
+- What is JSON?
 

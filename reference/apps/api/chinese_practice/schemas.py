@@ -18,13 +18,15 @@ class UserPublic(BaseModel):
 
 class AuthSignupRequest(BaseModel):
     email: EmailStr
-    password: str = Field(min_length=8, max_length=200)
+    # bcrypt only uses the first 72 bytes of a password; longer passwords can trigger confusing runtime errors.
+    # For a learning repo, we keep this simple and enforce a safe max length.
+    password: str = Field(min_length=8, max_length=72)
     role: str = Field(pattern="^(teacher|student)$")
 
 
 class AuthLoginRequest(BaseModel):
     email: EmailStr
-    password: str
+    password: str = Field(min_length=1, max_length=72)
 
 
 class ClassroomCreateRequest(BaseModel):
